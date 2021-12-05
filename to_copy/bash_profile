@@ -1,0 +1,46 @@
+#!/bin/bash
+
+alias ssh-add-rsaid='ssh-add ~/host/id_rsa_git; ssh-add ~/host/id_rsa_cartel; ssh-add ~/host/id_rsa_1057;'
+alias ll='ls -ltrGah'
+
+ssh-proxy-command() {
+  ssh-add ~/host/bastion.pem
+  ssh-add ~/host/sawfish.pem
+  ssh -t -o StrictHostKeyChecking=no -o ProxyCommand="ssh $1 nc $2 22" $4@$2 $3
+}
+
+scp-proxy() {
+  ssh-add ~/host/bastion.pem
+  ssh-add ~/host/sawfish.pem
+  scp -o StrictHostKeyChecking=no -o ProxyCommand="ssh $1 nc $2 22" $3 $5@$2:$4
+}
+
+### Bash Completion
+if [ -f /usr/share/bash-completion/completions/git ]; then
+  . /usr/share/bash-completion/completions/git
+fi
+
+#####################
+# ssh-agent stuff #
+#####################
+# get the ssh agent started
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+ echo "Initialising new SSH agent..."
+ /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+ echo succeeded
+ chmod 600 "${SSH_ENV}"
+ . "${SSH_ENV}" > /dev/null
+ /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+ . "${SSH_ENV}" > /dev/null
+ ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+ start_agent;
+ }
+else
+ start_agent;
+fi
