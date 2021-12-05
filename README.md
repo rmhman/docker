@@ -1,4 +1,4 @@
-# Docker for Enron
+# Docker for Fun
 
 Create and run a Docker container to develop and run scripts in a consistent environment.
 
