@@ -71,7 +71,7 @@ This file stores credentials. Please request from OPS team.
 Change usernames or just copy and paste your ssh config file. If you copy your config, make sure your key names match with what you have in the `to_share` directory
 
 
-## Develop and Test Enron Scripts
+## Develop and Test Scripts
 
 After all of the above setup is successful, you should be able to develop and run any scripts.
 
