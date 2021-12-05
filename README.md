@@ -47,14 +47,6 @@ See `list.sh` above for retrieve the appropriate ___container_id___
 
 Once you have your Enron container running, you will need to perform some extra tasks.
 
-### Clone Enron Repo
-
-From the bash shell of your running container, you will already have a script `~/enron_git_clone` to clone the Enron project. You will be prompted for your ssh key passphrase.
-
-```
-> ./enron_git_clone
-```
-
 ### Setup AWS
 
 Configure AWS CLI. You will need AWS access keys and default region (us-east-1).
