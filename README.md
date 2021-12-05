@@ -1,27 +1,7 @@
 # Docker for Enron
 
-Create and run a Docker container to develop and run Enron scripts in a consistent environment.
+Create and run a Docker container to develop and run scripts in a consistent environment.
 
-## Prerequisites
-
-* Docker
-* Personal SSH Private Key for GitLabs
-* SSH keys for AWS and Cartel spaces
-
-## Preparation
-
-You will need your GitLabs SSH private key to clone the Enron repo within the Docker Container. You will also need SSH keys for AWS and Cartel spaces when running remote SSH and SCP commands. Copy your SSH keys to the `to_share` folder and rename where appropriate. For example:
-
-```
-> cp ~/.ssh/<personal-git-key> ./to_share/id_rsa_git
-> cp ~/.ssh/<personal-cartel-key> ./to_share/id_rsa_cartel
-> cp ~/.ssh/<personal-1057-key> ./to_share/id_rsa_1057
-> cp ~/.ssh/sawfish.pem ./to_share/sawfish.pem
-# Another Option:
-cp -r ~/.ssh/* ./to_share/
-```
-
-Note that the above SSH keys are set in `.gitignore` so that they __will not__ get checked into source control.
 
 ## Docker Scripts
 
@@ -97,22 +77,11 @@ This file stores credentials. Please request from OPS team.
 ### Update User in ~/.ssh/config file to your personal user account
 
 Change usernames or just copy and paste your ssh config file. If you copy your config, make sure your key names match with what you have in the `to_share` directory
-```
-Host 1057bastion
-    ...
-    User CHANGE_ME
-    ...
 
-Host Cartel*
-    ...
-    User CHANGE_ME
-    ...
-
-```
 
 ## Develop and Test Enron Scripts
 
-After all of the above setup is successful, you should be able to develop and run any scripts within `Enron/iac`.
+After all of the above setup is successful, you should be able to develop and run any scripts.
 
 Added bash completion for Git commands.
 
@@ -125,13 +94,12 @@ Added ssh-proxy-command() and scp-proxy() functions to issue command on remote i
 Example of proxying an ssh command:
 
 ```
-> ssh-proxy-command 1057bastion <remote-instance-name> 'ls -l'
-> ssh-proxy-command CartelBastion <remote-instance-name> 'ls -l'
+> ssh-proxy-command bastion <remote-instance-name> 'ls -l'
+
 ```
 
 Example of proxying an scp command:
 
 ```
-> scp-proxy 1057bastion <remote-instance-name> <local-path-and-filename> '<remote-path>'
-> scp-proxy CartelBastion <remote-instance-name> <local-path-and-filename> '<remote-path>'
+> scp-proxy bastion <remote-instance-name> <local-path-and-filename> '<remote-path>'
 ```
