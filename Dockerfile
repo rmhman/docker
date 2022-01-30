@@ -17,8 +17,11 @@ RUN ["/bin/bash", "-c", "set -o pipefail && wget -q -O - https://packages.cloudf
 RUN ["/bin/bash", "-c", "set -o pipefail && echo \"deb https://packages.cloudfoundry.org/debian stable main\" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list"]
 
 RUN apt -y update && apt -y install \
+  ansible \
+  software-properties-common \
   bc \
   netcat \
+  mlocate \
   cf7-cli \
   curl \
   default-jdk \
@@ -35,10 +38,10 @@ RUN apt -y update && apt -y install \
 ################################
 
 # Download terraform for linux
-RUN wget https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip
+RUN wget https://releases.hashicorp.com/terraform/1.1.4/terraform_1.1.4_linux_amd64.zip
 
 # Unzip
-RUN unzip terraform_1.0.11_linux_amd64.zip
+RUN unzip terraform_1.1.4_linux_amd64.zip
 
 # Move to local bin
 RUN mv terraform /usr/local/bin/
@@ -48,14 +51,13 @@ RUN terraform --version
 ################################
 # Install AWS CLI
 ################################
+RUN pip install --upgrade pip
 RUN pip install awscli --upgrade --user
 
 # add aws cli location to path
 ENV PATH=~/.local/bin:$PATH
-
 RUN mkdir ~/.aws && touch ~/.aws/credentials
 
-RUN pip install --upgrade pip
 RUN cf --version
 RUN git --version
 RUN java -version
