@@ -2,6 +2,7 @@
 
 alias ssh-add-rsaid='ssh-add ~/host/id_rsa_git; ssh-add ~/host/id_rsa_cartel; ssh-add ~/host/id_rsa_1057;'
 alias ll='ls -ltrGah'
+alias weather='curl wttr.in'
 
 ssh-proxy-command() {
   ssh-add ~/host/bastion.pem
